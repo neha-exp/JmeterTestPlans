@@ -1,0 +1,873 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="2.4" jmeter="2.12.20141120">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
+      <stringProp name="TestPlan.comments"></stringProp>
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath"></stringProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+          <stringProp name="LoopController.loops">${__property(NO_OF_ORDERS)}</stringProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">1</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <longProp name="ThreadGroup.start_time">1464808667000</longProp>
+        <longProp name="ThreadGroup.end_time">1464808667000</longProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+      </ThreadGroup>
+      <hashTree>
+        <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="Counter" enabled="true">
+          <stringProp name="CounterConfig.start">${__property(ORDER_NO_START)}</stringProp>
+          <stringProp name="CounterConfig.end"></stringProp>
+          <stringProp name="CounterConfig.incr">1</stringProp>
+          <stringProp name="CounterConfig.name">OrderNo</stringProp>
+          <stringProp name="CounterConfig.format"></stringProp>
+          <boolProp name="CounterConfig.per_user">false</boolProp>
+        </CounterConfig>
+        <hashTree/>
+        <PublisherSampler guiclass="JMSPublisherGui" testclass="PublisherSampler" testname="Dallas Order - Shard 3" enabled="true">
+          <stringProp name="jms.jndi_properties">false</stringProp>
+          <stringProp name="jms.initial_context_factory">${__property(ICF)}</stringProp>
+          <stringProp name="jms.provider_url">${__property(provider_url)}</stringProp>
+          <stringProp name="jms.connection_factory">${__property(QCF)}</stringProp>
+          <stringProp name="jms.topic">${__property(ORDER_QUEUE)}</stringProp>
+          <stringProp name="jms.security_principle"></stringProp>
+          <stringProp name="jms.security_credentials"></stringProp>
+          <stringProp name="jms.text_message">&lt;Order AuthorizedClient=&quot;WCS&quot; BillToID=&quot;12345&quot; BypassPricing=&quot;Y&quot;
+		DocumentType=&quot;0001&quot; DraftOrderFlag=&quot;N&quot; EnterpriseCode=&quot;KROGER&quot;
+		EntryType=&quot;Web&quot; IsShipComplete=&quot;N&quot; OrderNo=&quot;DAL${OrderNo}&quot;
+		SellerOrganizationCode=&quot;KROGER_DALLAS&quot; ShipNode=&quot;STORE_03500591&quot; ValidatePromotionAward=&quot;N&quot;&gt;
+		&lt;PriceInfo Currency=&quot;USD&quot;/&gt;
+		&lt;Extn ExtnAuthStatus=&quot;COP&quot;
+			ExtnCustGUID=&quot;&quot;
+			ExtnIsTimeslotReserved=&quot;N&quot; ExtnLoyaltyId=&quot;1234567&quot;
+			ExtnPickUpDate=&quot;${__time(yyyy-MM-dd)}&quot; ExtnPickUpTimeBegin=&quot;19:00:00&quot;
+			ExtnPickUpTimeEnd=&quot;20:00:00&quot; ExtnReservationId=&quot;&quot;/&gt;
+		&lt;OrderLines&gt;
+			&lt;OrderLine DeliveryMethod=&quot;PICK&quot; OrderedQty=&quot;1.0&quot;
+				PrimeLineNo=&quot;1&quot; ShipNode=&quot;STORE_03500591&quot; SubLineNo=&quot;1&quot;&gt;
+				&lt;Item ItemID=&quot;0001300000103&quot; ProductClass=&quot;GOOD&quot; UnitOfMeasure=&quot;EACH&quot;/&gt;
+				&lt;Extn ExtnCustOrdQty=&quot;1.0&quot; ExtnSubstitutionAllowed=&quot;Y&quot;/&gt;
+				&lt;LinePriceInfo IsLinePriceForInformationOnly=&quot;N&quot;
+					IsPriceLocked=&quot;Y&quot; ListPrice=&quot;6.99&quot;
+					PricingQuantityStrategy=&quot;FIX&quot; RetailPrice=&quot;6.99&quot; UnitPrice=&quot;6.99&quot;/&gt;
+				&lt;LineCharges&gt;
+					&lt;LineCharge ChargeCategory=&quot;SERVICE_FEE&quot;
+						ChargeName=&quot;Service Fee&quot; ChargePerLine=&quot;0.1&quot; IsManual=&quot;Y&quot;/&gt;
+				&lt;/LineCharges&gt;
+				&lt;LineTaxes&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Sales Tax&quot;/&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Shipping Tax&quot;/&gt;
+				&lt;/LineTaxes&gt;
+				&lt;Awards/&gt;
+			&lt;/OrderLine&gt;
+			&lt;OrderLine DeliveryMethod=&quot;PICK&quot; OrderedQty=&quot;1.0&quot;
+				PrimeLineNo=&quot;2&quot; ShipNode=&quot;STORE_03500591&quot; SubLineNo=&quot;1&quot;&gt;
+				&lt;Item ItemID=&quot;0005480003176&quot; ProductClass=&quot;GOOD&quot; UnitOfMeasure=&quot;EACH&quot;/&gt;
+				&lt;Extn ExtnCustOrdQty=&quot;1.0&quot; ExtnSubstitutionAllowed=&quot;Y&quot;/&gt;
+				&lt;LinePriceInfo IsLinePriceForInformationOnly=&quot;N&quot;
+					IsPriceLocked=&quot;Y&quot; ListPrice=&quot;1.79&quot;
+					PricingQuantityStrategy=&quot;FIX&quot; RetailPrice=&quot;1.79&quot; UnitPrice=&quot;1.79&quot;/&gt;
+				&lt;LineCharges&gt;
+					&lt;LineCharge ChargeCategory=&quot;SERVICE_FEE&quot;
+						ChargeName=&quot;Service Fee&quot; ChargePerLine=&quot;0.1&quot; IsManual=&quot;Y&quot;/&gt;
+				&lt;/LineCharges&gt;
+				&lt;LineTaxes&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Sales Tax&quot;/&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Shipping Tax&quot;/&gt;
+				&lt;/LineTaxes&gt;
+				&lt;Awards/&gt;
+			&lt;/OrderLine&gt;
+			&lt;OrderLine DeliveryMethod=&quot;PICK&quot; OrderedQty=&quot;1.0&quot;
+				PrimeLineNo=&quot;3&quot; ShipNode=&quot;STORE_03500591&quot; SubLineNo=&quot;1&quot;&gt;
+				&lt;Item ItemID=&quot;0005480008547&quot; ProductClass=&quot;GOOD&quot; UnitOfMeasure=&quot;EACH&quot;/&gt;
+				&lt;Extn ExtnCustOrdQty=&quot;1.0&quot; ExtnSubstitutionAllowed=&quot;Y&quot;/&gt;
+				&lt;LinePriceInfo IsLinePriceForInformationOnly=&quot;N&quot;
+					IsPriceLocked=&quot;Y&quot; ListPrice=&quot;1.79&quot;
+					PricingQuantityStrategy=&quot;FIX&quot; RetailPrice=&quot;1.79&quot; UnitPrice=&quot;1.79&quot;/&gt;
+				&lt;LineCharges&gt;
+					&lt;LineCharge ChargeCategory=&quot;SERVICE_FEE&quot;
+						ChargeName=&quot;Service Fee&quot; ChargePerLine=&quot;0.1&quot; IsManual=&quot;Y&quot;/&gt;
+				&lt;/LineCharges&gt;
+				&lt;LineTaxes&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Sales Tax&quot;/&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Shipping Tax&quot;/&gt;
+				&lt;/LineTaxes&gt;
+				&lt;Awards/&gt;
+			&lt;/OrderLine&gt;
+			&lt;OrderLine DeliveryMethod=&quot;PICK&quot; OrderedQty=&quot;1.0&quot;
+				PrimeLineNo=&quot;4&quot; ShipNode=&quot;STORE_03500591&quot; SubLineNo=&quot;1&quot;&gt;
+				&lt;Item ItemID=&quot;0001111086206&quot; ProductClass=&quot;GOOD&quot; UnitOfMeasure=&quot;EACH&quot;/&gt;
+				&lt;Extn ExtnCustOrdQty=&quot;1.0&quot; ExtnSubstitutionAllowed=&quot;Y&quot;/&gt;
+				&lt;LinePriceInfo IsLinePriceForInformationOnly=&quot;N&quot;
+					IsPriceLocked=&quot;Y&quot; ListPrice=&quot;2.39&quot;
+					PricingQuantityStrategy=&quot;FIX&quot; RetailPrice=&quot;2.39&quot; UnitPrice=&quot;2.39&quot;/&gt;
+				&lt;LineCharges&gt;
+					&lt;LineCharge ChargeCategory=&quot;SERVICE_FEE&quot;
+						ChargeName=&quot;Service Fee&quot; ChargePerLine=&quot;0.1&quot; IsManual=&quot;Y&quot;/&gt;
+				&lt;/LineCharges&gt;
+				&lt;LineTaxes&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Sales Tax&quot;/&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Shipping Tax&quot;/&gt;
+				&lt;/LineTaxes&gt;
+				&lt;Awards/&gt;
+			&lt;/OrderLine&gt;
+			&lt;OrderLine DeliveryMethod=&quot;PICK&quot; OrderedQty=&quot;1.0&quot;
+				PrimeLineNo=&quot;5&quot; ShipNode=&quot;STORE_03500591&quot; SubLineNo=&quot;1&quot;&gt;
+				&lt;Item ItemID=&quot;0003450015181&quot; ProductClass=&quot;GOOD&quot; UnitOfMeasure=&quot;EACH&quot;/&gt;
+				&lt;Extn ExtnCustOrdQty=&quot;1.0&quot; ExtnSubstitutionAllowed=&quot;Y&quot;/&gt;
+				&lt;LinePriceInfo IsLinePriceForInformationOnly=&quot;N&quot;
+					IsPriceLocked=&quot;Y&quot; ListPrice=&quot;4.59&quot;
+					PricingQuantityStrategy=&quot;FIX&quot; RetailPrice=&quot;4.59&quot; UnitPrice=&quot;4.59&quot;/&gt;
+				&lt;LineCharges&gt;
+					&lt;LineCharge ChargeCategory=&quot;SERVICE_FEE&quot;
+						ChargeName=&quot;Service Fee&quot; ChargePerLine=&quot;0.1&quot; IsManual=&quot;Y&quot;/&gt;
+				&lt;/LineCharges&gt;
+				&lt;LineTaxes&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Sales Tax&quot;/&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Shipping Tax&quot;/&gt;
+				&lt;/LineTaxes&gt;
+				&lt;Awards/&gt;
+			&lt;/OrderLine&gt;
+			&lt;OrderLine DeliveryMethod=&quot;PICK&quot; OrderedQty=&quot;1.0&quot;
+				PrimeLineNo=&quot;6&quot; ShipNode=&quot;STORE_03500591&quot; SubLineNo=&quot;1&quot;&gt;
+				&lt;Item ItemID=&quot;0001111049213&quot; ProductClass=&quot;GOOD&quot; UnitOfMeasure=&quot;EACH&quot;/&gt;
+				&lt;Extn ExtnCustOrdQty=&quot;1.0&quot; ExtnSubstitutionAllowed=&quot;Y&quot;/&gt;
+				&lt;LinePriceInfo IsLinePriceForInformationOnly=&quot;N&quot;
+					IsPriceLocked=&quot;Y&quot; ListPrice=&quot;2.49&quot;
+					PricingQuantityStrategy=&quot;FIX&quot; RetailPrice=&quot;2.49&quot; UnitPrice=&quot;2.49&quot;/&gt;
+				&lt;LineCharges&gt;
+					&lt;LineCharge ChargeCategory=&quot;SERVICE_FEE&quot;
+						ChargeName=&quot;Service Fee&quot; ChargePerLine=&quot;0.1&quot; IsManual=&quot;Y&quot;/&gt;
+				&lt;/LineCharges&gt;
+				&lt;LineTaxes&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Sales Tax&quot;/&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Shipping Tax&quot;/&gt;
+				&lt;/LineTaxes&gt;
+				&lt;Awards/&gt;
+			&lt;/OrderLine&gt;
+			&lt;OrderLine DeliveryMethod=&quot;PICK&quot; OrderedQty=&quot;1.0&quot;
+				PrimeLineNo=&quot;7&quot; ShipNode=&quot;STORE_03500591&quot; SubLineNo=&quot;1&quot;&gt;
+				&lt;Item ItemID=&quot;0005150000957&quot; ProductClass=&quot;GOOD&quot; UnitOfMeasure=&quot;EACH&quot;/&gt;
+				&lt;Extn ExtnCustOrdQty=&quot;1.0&quot; ExtnSubstitutionAllowed=&quot;Y&quot;/&gt;
+				&lt;LinePriceInfo IsLinePriceForInformationOnly=&quot;N&quot;
+					IsPriceLocked=&quot;Y&quot; ListPrice=&quot;3.69&quot;
+					PricingQuantityStrategy=&quot;FIX&quot; RetailPrice=&quot;3.69&quot; UnitPrice=&quot;3.69&quot;/&gt;
+				&lt;LineCharges&gt;
+					&lt;LineCharge ChargeCategory=&quot;SERVICE_FEE&quot;
+						ChargeName=&quot;Service Fee&quot; ChargePerLine=&quot;0.1&quot; IsManual=&quot;Y&quot;/&gt;
+				&lt;/LineCharges&gt;
+				&lt;LineTaxes&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Sales Tax&quot;/&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Shipping Tax&quot;/&gt;
+				&lt;/LineTaxes&gt;
+				&lt;Awards/&gt;
+			&lt;/OrderLine&gt;
+			&lt;OrderLine DeliveryMethod=&quot;PICK&quot; OrderedQty=&quot;2.0&quot;
+				PrimeLineNo=&quot;8&quot; ShipNode=&quot;STORE_03500591&quot; SubLineNo=&quot;1&quot;&gt;
+				&lt;Item ItemID=&quot;0002840059511&quot; ProductClass=&quot;GOOD&quot; UnitOfMeasure=&quot;EACH&quot;/&gt;
+				&lt;Extn ExtnCustOrdQty=&quot;2.0&quot; ExtnSubstitutionAllowed=&quot;Y&quot;/&gt;
+				&lt;LinePriceInfo IsLinePriceForInformationOnly=&quot;N&quot;
+					IsPriceLocked=&quot;Y&quot; ListPrice=&quot;3.29&quot;
+					PricingQuantityStrategy=&quot;FIX&quot; RetailPrice=&quot;3.29&quot; UnitPrice=&quot;3.29&quot;/&gt;
+				&lt;LineCharges&gt;
+					&lt;LineCharge ChargeCategory=&quot;SERVICE_FEE&quot;
+						ChargeName=&quot;Service Fee&quot; ChargePerLine=&quot;0.21&quot; IsManual=&quot;Y&quot;/&gt;
+				&lt;/LineCharges&gt;
+				&lt;LineTaxes&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Sales Tax&quot;/&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Shipping Tax&quot;/&gt;
+				&lt;/LineTaxes&gt;
+				&lt;Awards/&gt;
+			&lt;/OrderLine&gt;
+			&lt;OrderLine DeliveryMethod=&quot;PICK&quot; OrderedQty=&quot;2.0&quot;
+				PrimeLineNo=&quot;9&quot; ShipNode=&quot;STORE_03500591&quot; SubLineNo=&quot;1&quot;&gt;
+				&lt;Item ItemID=&quot;0001111048965&quot; ProductClass=&quot;GOOD&quot; UnitOfMeasure=&quot;EACH&quot;/&gt;
+				&lt;Extn ExtnCustOrdQty=&quot;2.0&quot; ExtnSubstitutionAllowed=&quot;Y&quot;/&gt;
+				&lt;LinePriceInfo IsLinePriceForInformationOnly=&quot;N&quot;
+					IsPriceLocked=&quot;Y&quot; ListPrice=&quot;1.5&quot;
+					PricingQuantityStrategy=&quot;FIX&quot; RetailPrice=&quot;1.5&quot; UnitPrice=&quot;1.5&quot;/&gt;
+				&lt;LineCharges&gt;
+					&lt;LineCharge ChargeCategory=&quot;SERVICE_FEE&quot;
+						ChargeName=&quot;Service Fee&quot; ChargePerLine=&quot;0.21&quot; IsManual=&quot;Y&quot;/&gt;
+				&lt;/LineCharges&gt;
+				&lt;LineTaxes&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Sales Tax&quot;/&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Shipping Tax&quot;/&gt;
+				&lt;/LineTaxes&gt;
+				&lt;Awards/&gt;
+			&lt;/OrderLine&gt;
+			&lt;OrderLine DeliveryMethod=&quot;PICK&quot; OrderedQty=&quot;1.0&quot;
+				PrimeLineNo=&quot;10&quot; ShipNode=&quot;STORE_03500591&quot; SubLineNo=&quot;1&quot;&gt;
+				&lt;Item ItemID=&quot;0002430004441&quot; ProductClass=&quot;GOOD&quot; UnitOfMeasure=&quot;EACH&quot;/&gt;
+				&lt;Extn ExtnCustOrdQty=&quot;1.0&quot; ExtnSubstitutionAllowed=&quot;Y&quot;/&gt;
+				&lt;LinePriceInfo IsLinePriceForInformationOnly=&quot;N&quot;
+					IsPriceLocked=&quot;Y&quot; ListPrice=&quot;2.59&quot;
+					PricingQuantityStrategy=&quot;FIX&quot; RetailPrice=&quot;2.59&quot; UnitPrice=&quot;2.59&quot;/&gt;
+				&lt;LineCharges&gt;
+					&lt;LineCharge ChargeCategory=&quot;SERVICE_FEE&quot;
+						ChargeName=&quot;Service Fee&quot; ChargePerLine=&quot;0.1&quot; IsManual=&quot;Y&quot;/&gt;
+				&lt;/LineCharges&gt;
+				&lt;LineTaxes&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Sales Tax&quot;/&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Shipping Tax&quot;/&gt;
+				&lt;/LineTaxes&gt;
+				&lt;Awards/&gt;
+			&lt;/OrderLine&gt;
+			&lt;OrderLine DeliveryMethod=&quot;PICK&quot; OrderedQty=&quot;1.0&quot;
+				PrimeLineNo=&quot;11&quot; ShipNode=&quot;STORE_03500591&quot; SubLineNo=&quot;1&quot;&gt;
+				&lt;Item ItemID=&quot;0001111081252&quot; ProductClass=&quot;GOOD&quot; UnitOfMeasure=&quot;EACH&quot;/&gt;
+				&lt;Extn ExtnCustOrdQty=&quot;1.0&quot; ExtnSubstitutionAllowed=&quot;Y&quot;/&gt;
+				&lt;LinePriceInfo IsLinePriceForInformationOnly=&quot;N&quot;
+					IsPriceLocked=&quot;Y&quot; ListPrice=&quot;2.19&quot;
+					PricingQuantityStrategy=&quot;FIX&quot; RetailPrice=&quot;2.19&quot; UnitPrice=&quot;2.19&quot;/&gt;
+				&lt;LineCharges&gt;
+					&lt;LineCharge ChargeCategory=&quot;SERVICE_FEE&quot;
+						ChargeName=&quot;Service Fee&quot; ChargePerLine=&quot;0.1&quot; IsManual=&quot;Y&quot;/&gt;
+				&lt;/LineCharges&gt;
+				&lt;LineTaxes&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Sales Tax&quot;/&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Shipping Tax&quot;/&gt;
+				&lt;/LineTaxes&gt;
+				&lt;Awards/&gt;
+			&lt;/OrderLine&gt;
+			&lt;OrderLine DeliveryMethod=&quot;PICK&quot; OrderedQty=&quot;1.0&quot;
+				PrimeLineNo=&quot;12&quot; ShipNode=&quot;STORE_03500591&quot; SubLineNo=&quot;1&quot;&gt;
+				&lt;Item ItemID=&quot;0005150025516&quot; ProductClass=&quot;GOOD&quot; UnitOfMeasure=&quot;EACH&quot;/&gt;
+				&lt;Extn ExtnCustOrdQty=&quot;1.0&quot; ExtnSubstitutionAllowed=&quot;Y&quot;/&gt;
+				&lt;LinePriceInfo IsLinePriceForInformationOnly=&quot;N&quot;
+					IsPriceLocked=&quot;Y&quot; ListPrice=&quot;2.69&quot;
+					PricingQuantityStrategy=&quot;FIX&quot; RetailPrice=&quot;2.69&quot; UnitPrice=&quot;2.69&quot;/&gt;
+				&lt;LineCharges&gt;
+					&lt;LineCharge ChargeCategory=&quot;SERVICE_FEE&quot;
+						ChargeName=&quot;Service Fee&quot; ChargePerLine=&quot;0.1&quot; IsManual=&quot;Y&quot;/&gt;
+				&lt;/LineCharges&gt;
+				&lt;LineTaxes&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Sales Tax&quot;/&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Shipping Tax&quot;/&gt;
+				&lt;/LineTaxes&gt;
+				&lt;Awards/&gt;
+			&lt;/OrderLine&gt;
+			&lt;OrderLine DeliveryMethod=&quot;PICK&quot; OrderedQty=&quot;1.0&quot;
+				PrimeLineNo=&quot;13&quot; ShipNode=&quot;STORE_03500591&quot; SubLineNo=&quot;1&quot;&gt;
+				&lt;Item ItemID=&quot;0005000030262&quot; ProductClass=&quot;GOOD&quot; UnitOfMeasure=&quot;EACH&quot;/&gt;
+				&lt;Extn ExtnCustOrdQty=&quot;1.0&quot; ExtnSubstitutionAllowed=&quot;Y&quot;/&gt;
+				&lt;LinePriceInfo IsLinePriceForInformationOnly=&quot;N&quot;
+					IsPriceLocked=&quot;Y&quot; ListPrice=&quot;3.19&quot;
+					PricingQuantityStrategy=&quot;FIX&quot; RetailPrice=&quot;3.19&quot; UnitPrice=&quot;3.19&quot;/&gt;
+				&lt;LineCharges&gt;
+					&lt;LineCharge ChargeCategory=&quot;SERVICE_FEE&quot;
+						ChargeName=&quot;Service Fee&quot; ChargePerLine=&quot;0.1&quot; IsManual=&quot;Y&quot;/&gt;
+				&lt;/LineCharges&gt;
+				&lt;LineTaxes&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Sales Tax&quot;/&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Shipping Tax&quot;/&gt;
+				&lt;/LineTaxes&gt;
+				&lt;Awards/&gt;
+			&lt;/OrderLine&gt;
+			&lt;OrderLine DeliveryMethod=&quot;PICK&quot; OrderedQty=&quot;1.0&quot;
+				PrimeLineNo=&quot;14&quot; ShipNode=&quot;STORE_03500591&quot; SubLineNo=&quot;1&quot;&gt;
+				&lt;Item ItemID=&quot;0001111060903&quot; ProductClass=&quot;GOOD&quot; UnitOfMeasure=&quot;EACH&quot;/&gt;
+				&lt;Extn ExtnCustOrdQty=&quot;1.0&quot; ExtnSubstitutionAllowed=&quot;Y&quot;/&gt;
+				&lt;LinePriceInfo IsLinePriceForInformationOnly=&quot;N&quot;
+					IsPriceLocked=&quot;Y&quot; ListPrice=&quot;1.29&quot;
+					PricingQuantityStrategy=&quot;FIX&quot; RetailPrice=&quot;1.29&quot; UnitPrice=&quot;1.29&quot;/&gt;
+				&lt;LineCharges&gt;
+					&lt;LineCharge ChargeCategory=&quot;SERVICE_FEE&quot;
+						ChargeName=&quot;Service Fee&quot; ChargePerLine=&quot;0.1&quot; IsManual=&quot;Y&quot;/&gt;
+				&lt;/LineCharges&gt;
+				&lt;LineTaxes&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Sales Tax&quot;/&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Shipping Tax&quot;/&gt;
+				&lt;/LineTaxes&gt;
+				&lt;Awards/&gt;
+			&lt;/OrderLine&gt;
+			&lt;OrderLine DeliveryMethod=&quot;PICK&quot; OrderedQty=&quot;2.0&quot;
+				PrimeLineNo=&quot;15&quot; ShipNode=&quot;STORE_03500591&quot; SubLineNo=&quot;1&quot;&gt;
+				&lt;Item ItemID=&quot;0001111082113&quot; ProductClass=&quot;GOOD&quot; UnitOfMeasure=&quot;EACH&quot;/&gt;
+				&lt;Extn ExtnCustOrdQty=&quot;2.0&quot; ExtnSubstitutionAllowed=&quot;Y&quot;/&gt;
+				&lt;LinePriceInfo IsLinePriceForInformationOnly=&quot;N&quot;
+					IsPriceLocked=&quot;Y&quot; ListPrice=&quot;3.69&quot;
+					PricingQuantityStrategy=&quot;FIX&quot; RetailPrice=&quot;3.69&quot; UnitPrice=&quot;3.69&quot;/&gt;
+				&lt;LineCharges&gt;
+					&lt;LineCharge ChargeCategory=&quot;SERVICE_FEE&quot;
+						ChargeName=&quot;Service Fee&quot; ChargePerLine=&quot;0.21&quot; IsManual=&quot;Y&quot;/&gt;
+				&lt;/LineCharges&gt;
+				&lt;LineTaxes&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Sales Tax&quot;/&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Shipping Tax&quot;/&gt;
+				&lt;/LineTaxes&gt;
+				&lt;Awards/&gt;
+			&lt;/OrderLine&gt;
+			&lt;OrderLine DeliveryMethod=&quot;PICK&quot; OrderedQty=&quot;2.0&quot;
+				PrimeLineNo=&quot;16&quot; ShipNode=&quot;STORE_03500591&quot; SubLineNo=&quot;1&quot;&gt;
+				&lt;Item ItemID=&quot;0001111041700&quot; ProductClass=&quot;GOOD&quot; UnitOfMeasure=&quot;EACH&quot;/&gt;
+				&lt;Extn ExtnCustOrdQty=&quot;2.0&quot; ExtnSubstitutionAllowed=&quot;Y&quot;/&gt;
+				&lt;LinePriceInfo IsLinePriceForInformationOnly=&quot;N&quot;
+					IsPriceLocked=&quot;Y&quot; ListPrice=&quot;2.39&quot;
+					PricingQuantityStrategy=&quot;FIX&quot; RetailPrice=&quot;2.39&quot; UnitPrice=&quot;2.39&quot;/&gt;
+				&lt;LineCharges&gt;
+					&lt;LineCharge ChargeCategory=&quot;SERVICE_FEE&quot;
+						ChargeName=&quot;Service Fee&quot; ChargePerLine=&quot;0.21&quot; IsManual=&quot;Y&quot;/&gt;
+				&lt;/LineCharges&gt;
+				&lt;LineTaxes&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Sales Tax&quot;/&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Shipping Tax&quot;/&gt;
+				&lt;/LineTaxes&gt;
+				&lt;Awards/&gt;
+			&lt;/OrderLine&gt;
+			&lt;OrderLine DeliveryMethod=&quot;PICK&quot; OrderedQty=&quot;1.0&quot;
+				PrimeLineNo=&quot;17&quot; ShipNode=&quot;STORE_03500591&quot; SubLineNo=&quot;1&quot;&gt;
+				&lt;Item ItemID=&quot;0001111097569&quot; ProductClass=&quot;GOOD&quot; UnitOfMeasure=&quot;EACH&quot;/&gt;
+				&lt;Extn ExtnCustOrdQty=&quot;1.0&quot; ExtnSubstitutionAllowed=&quot;Y&quot;/&gt;
+				&lt;LinePriceInfo IsLinePriceForInformationOnly=&quot;N&quot;
+					IsPriceLocked=&quot;Y&quot; ListPrice=&quot;10.47&quot;
+					PricingQuantityStrategy=&quot;FIX&quot; RetailPrice=&quot;10.47&quot; UnitPrice=&quot;10.47&quot;/&gt;
+				&lt;LineCharges&gt;
+					&lt;LineCharge ChargeCategory=&quot;SERVICE_FEE&quot;
+						ChargeName=&quot;Service Fee&quot; ChargePerLine=&quot;0.1&quot; IsManual=&quot;Y&quot;/&gt;
+				&lt;/LineCharges&gt;
+				&lt;LineTaxes&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Sales Tax&quot;/&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Shipping Tax&quot;/&gt;
+				&lt;/LineTaxes&gt;
+				&lt;Awards/&gt;
+			&lt;/OrderLine&gt;
+			&lt;OrderLine DeliveryMethod=&quot;PICK&quot; OrderedQty=&quot;1.0&quot;
+				PrimeLineNo=&quot;18&quot; ShipNode=&quot;STORE_03500591&quot; SubLineNo=&quot;1&quot;&gt;
+				&lt;Item ItemID=&quot;0007342000025&quot; ProductClass=&quot;GOOD&quot; UnitOfMeasure=&quot;EACH&quot;/&gt;
+				&lt;Extn ExtnCustOrdQty=&quot;1.0&quot; ExtnSubstitutionAllowed=&quot;Y&quot;/&gt;
+				&lt;LinePriceInfo IsLinePriceForInformationOnly=&quot;N&quot;
+					IsPriceLocked=&quot;Y&quot; ListPrice=&quot;3.25&quot;
+					PricingQuantityStrategy=&quot;FIX&quot; RetailPrice=&quot;3.25&quot; UnitPrice=&quot;3.25&quot;/&gt;
+				&lt;LineCharges&gt;
+					&lt;LineCharge ChargeCategory=&quot;SERVICE_FEE&quot;
+						ChargeName=&quot;Service Fee&quot; ChargePerLine=&quot;0.1&quot; IsManual=&quot;Y&quot;/&gt;
+				&lt;/LineCharges&gt;
+				&lt;LineTaxes&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Sales Tax&quot;/&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Shipping Tax&quot;/&gt;
+				&lt;/LineTaxes&gt;
+				&lt;Awards/&gt;
+			&lt;/OrderLine&gt;
+			&lt;OrderLine DeliveryMethod=&quot;PICK&quot; OrderedQty=&quot;3.0&quot;
+				PrimeLineNo=&quot;19&quot; ShipNode=&quot;STORE_03500591&quot; SubLineNo=&quot;1&quot;&gt;
+				&lt;Item ItemID=&quot;0001111084009&quot; ProductClass=&quot;GOOD&quot; UnitOfMeasure=&quot;EACH&quot;/&gt;
+				&lt;Extn ExtnCustOrdQty=&quot;3.0&quot; ExtnSubstitutionAllowed=&quot;Y&quot;/&gt;
+				&lt;LinePriceInfo IsLinePriceForInformationOnly=&quot;N&quot;
+					IsPriceLocked=&quot;Y&quot; ListPrice=&quot;0.69&quot;
+					PricingQuantityStrategy=&quot;FIX&quot; RetailPrice=&quot;0.69&quot; UnitPrice=&quot;0.69&quot;/&gt;
+				&lt;LineCharges&gt;
+					&lt;LineCharge ChargeCategory=&quot;SERVICE_FEE&quot;
+						ChargeName=&quot;Service Fee&quot; ChargePerLine=&quot;0.32&quot; IsManual=&quot;Y&quot;/&gt;
+				&lt;/LineCharges&gt;
+				&lt;LineTaxes&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Sales Tax&quot;/&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Shipping Tax&quot;/&gt;
+				&lt;/LineTaxes&gt;
+				&lt;Awards/&gt;
+			&lt;/OrderLine&gt;
+			&lt;OrderLine DeliveryMethod=&quot;PICK&quot; OrderedQty=&quot;1.0&quot;
+				PrimeLineNo=&quot;20&quot; ShipNode=&quot;STORE_03500591&quot; SubLineNo=&quot;1&quot;&gt;
+				&lt;Item ItemID=&quot;0004900001278&quot; ProductClass=&quot;GOOD&quot; UnitOfMeasure=&quot;EACH&quot;/&gt;
+				&lt;Extn ExtnCustOrdQty=&quot;1.0&quot; ExtnSubstitutionAllowed=&quot;Y&quot;/&gt;
+				&lt;LinePriceInfo IsLinePriceForInformationOnly=&quot;N&quot;
+					IsPriceLocked=&quot;Y&quot; ListPrice=&quot;7.29&quot;
+					PricingQuantityStrategy=&quot;FIX&quot; RetailPrice=&quot;7.29&quot; UnitPrice=&quot;7.29&quot;/&gt;
+				&lt;LineCharges&gt;
+					&lt;LineCharge ChargeCategory=&quot;SERVICE_FEE&quot;
+						ChargeName=&quot;Service Fee&quot; ChargePerLine=&quot;0.1&quot; IsManual=&quot;Y&quot;/&gt;
+				&lt;/LineCharges&gt;
+				&lt;LineTaxes&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Sales Tax&quot;/&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Shipping Tax&quot;/&gt;
+				&lt;/LineTaxes&gt;
+				&lt;Awards/&gt;
+			&lt;/OrderLine&gt;
+			&lt;OrderLine DeliveryMethod=&quot;PICK&quot; OrderedQty=&quot;1.0&quot;
+				PrimeLineNo=&quot;21&quot; ShipNode=&quot;STORE_03500591&quot; SubLineNo=&quot;1&quot;&gt;
+				&lt;Item ItemID=&quot;0001111002090&quot; ProductClass=&quot;GOOD&quot; UnitOfMeasure=&quot;EACH&quot;/&gt;
+				&lt;Extn ExtnCustOrdQty=&quot;1.0&quot; ExtnSubstitutionAllowed=&quot;Y&quot;/&gt;
+				&lt;LinePriceInfo IsLinePriceForInformationOnly=&quot;N&quot;
+					IsPriceLocked=&quot;Y&quot; ListPrice=&quot;1&quot;
+					PricingQuantityStrategy=&quot;FIX&quot; RetailPrice=&quot;1&quot; UnitPrice=&quot;1&quot;/&gt;
+				&lt;LineCharges&gt;
+					&lt;LineCharge ChargeCategory=&quot;SERVICE_FEE&quot;
+						ChargeName=&quot;Service Fee&quot; ChargePerLine=&quot;0.1&quot; IsManual=&quot;Y&quot;/&gt;
+				&lt;/LineCharges&gt;
+				&lt;LineTaxes&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Sales Tax&quot;/&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Shipping Tax&quot;/&gt;
+				&lt;/LineTaxes&gt;
+				&lt;Awards/&gt;
+			&lt;/OrderLine&gt;
+			&lt;OrderLine DeliveryMethod=&quot;PICK&quot; OrderedQty=&quot;1.0&quot;
+				PrimeLineNo=&quot;22&quot; ShipNode=&quot;STORE_03500591&quot; SubLineNo=&quot;1&quot;&gt;
+				&lt;Item ItemID=&quot;0001111002010&quot; ProductClass=&quot;GOOD&quot; UnitOfMeasure=&quot;EACH&quot;/&gt;
+				&lt;Extn ExtnCustOrdQty=&quot;1.0&quot; ExtnSubstitutionAllowed=&quot;Y&quot;/&gt;
+				&lt;LinePriceInfo IsLinePriceForInformationOnly=&quot;N&quot;
+					IsPriceLocked=&quot;Y&quot; ListPrice=&quot;1&quot;
+					PricingQuantityStrategy=&quot;FIX&quot; RetailPrice=&quot;1&quot; UnitPrice=&quot;1&quot;/&gt;
+				&lt;LineCharges&gt;
+					&lt;LineCharge ChargeCategory=&quot;SERVICE_FEE&quot;
+						ChargeName=&quot;Service Fee&quot; ChargePerLine=&quot;0.11&quot; IsManual=&quot;Y&quot;/&gt;
+				&lt;/LineCharges&gt;
+				&lt;LineTaxes&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Sales Tax&quot;/&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Shipping Tax&quot;/&gt;
+				&lt;/LineTaxes&gt;
+				&lt;Awards/&gt;
+			&lt;/OrderLine&gt;
+			&lt;OrderLine DeliveryMethod=&quot;PICK&quot; OrderedQty=&quot;1.0&quot;
+				PrimeLineNo=&quot;23&quot; ShipNode=&quot;STORE_03500591&quot; SubLineNo=&quot;1&quot;&gt;
+				&lt;Item ItemID=&quot;0004178900231&quot; ProductClass=&quot;GOOD&quot; UnitOfMeasure=&quot;EACH&quot;/&gt;
+				&lt;Extn ExtnCustOrdQty=&quot;1.0&quot; ExtnSubstitutionAllowed=&quot;Y&quot;/&gt;
+				&lt;LinePriceInfo IsLinePriceForInformationOnly=&quot;N&quot;
+					IsPriceLocked=&quot;Y&quot; ListPrice=&quot;2.29&quot;
+					PricingQuantityStrategy=&quot;FIX&quot; RetailPrice=&quot;2.29&quot; UnitPrice=&quot;2.29&quot;/&gt;
+				&lt;LineCharges&gt;
+					&lt;LineCharge ChargeCategory=&quot;SERVICE_FEE&quot;
+						ChargeName=&quot;Service Fee&quot; ChargePerLine=&quot;0.11&quot; IsManual=&quot;Y&quot;/&gt;
+				&lt;/LineCharges&gt;
+				&lt;LineTaxes&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Sales Tax&quot;/&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Shipping Tax&quot;/&gt;
+				&lt;/LineTaxes&gt;
+				&lt;Awards/&gt;
+			&lt;/OrderLine&gt;
+			&lt;OrderLine DeliveryMethod=&quot;PICK&quot; OrderedQty=&quot;1.0&quot;
+				PrimeLineNo=&quot;24&quot; ShipNode=&quot;STORE_03500591&quot; SubLineNo=&quot;1&quot;&gt;
+				&lt;Item ItemID=&quot;0007527895038&quot; ProductClass=&quot;GOOD&quot; UnitOfMeasure=&quot;EACH&quot;/&gt;
+				&lt;Extn ExtnCustOrdQty=&quot;1.0&quot; ExtnSubstitutionAllowed=&quot;Y&quot;/&gt;
+				&lt;LinePriceInfo IsLinePriceForInformationOnly=&quot;N&quot;
+					IsPriceLocked=&quot;Y&quot; ListPrice=&quot;5.99&quot;
+					PricingQuantityStrategy=&quot;FIX&quot; RetailPrice=&quot;5.99&quot; UnitPrice=&quot;5.99&quot;/&gt;
+				&lt;LineCharges&gt;
+					&lt;LineCharge ChargeCategory=&quot;SERVICE_FEE&quot;
+						ChargeName=&quot;Service Fee&quot; ChargePerLine=&quot;0.11&quot; IsManual=&quot;Y&quot;/&gt;
+				&lt;/LineCharges&gt;
+				&lt;LineTaxes&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Sales Tax&quot;/&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Shipping Tax&quot;/&gt;
+				&lt;/LineTaxes&gt;
+				&lt;Awards/&gt;
+			&lt;/OrderLine&gt;
+			&lt;OrderLine DeliveryMethod=&quot;PICK&quot; OrderedQty=&quot;1.0&quot;
+				PrimeLineNo=&quot;25&quot; ShipNode=&quot;STORE_03500591&quot; SubLineNo=&quot;1&quot;&gt;
+				&lt;Item ItemID=&quot;0007274507612&quot; ProductClass=&quot;GOOD&quot; UnitOfMeasure=&quot;EACH&quot;/&gt;
+				&lt;Extn ExtnCustOrdQty=&quot;1.0&quot; ExtnSubstitutionAllowed=&quot;Y&quot;/&gt;
+				&lt;LinePriceInfo IsLinePriceForInformationOnly=&quot;N&quot;
+					IsPriceLocked=&quot;Y&quot; ListPrice=&quot;8.99&quot;
+					PricingQuantityStrategy=&quot;FIX&quot; RetailPrice=&quot;8.99&quot; UnitPrice=&quot;8.99&quot;/&gt;
+				&lt;LineCharges&gt;
+					&lt;LineCharge ChargeCategory=&quot;SERVICE_FEE&quot;
+						ChargeName=&quot;Service Fee&quot; ChargePerLine=&quot;0.11&quot; IsManual=&quot;Y&quot;/&gt;
+				&lt;/LineCharges&gt;
+				&lt;LineTaxes&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Sales Tax&quot;/&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Shipping Tax&quot;/&gt;
+				&lt;/LineTaxes&gt;
+				&lt;Awards/&gt;
+			&lt;/OrderLine&gt;
+			&lt;OrderLine DeliveryMethod=&quot;PICK&quot; OrderedQty=&quot;1.0&quot;
+				PrimeLineNo=&quot;26&quot; ShipNode=&quot;STORE_03500591&quot; SubLineNo=&quot;1&quot;&gt;
+				&lt;Item ItemID=&quot;0002370001485&quot; ProductClass=&quot;GOOD&quot; UnitOfMeasure=&quot;EACH&quot;/&gt;
+				&lt;Extn ExtnCustOrdQty=&quot;1.0&quot; ExtnSubstitutionAllowed=&quot;Y&quot;/&gt;
+				&lt;LinePriceInfo IsLinePriceForInformationOnly=&quot;N&quot;
+					IsPriceLocked=&quot;Y&quot; ListPrice=&quot;7.49&quot;
+					PricingQuantityStrategy=&quot;FIX&quot; RetailPrice=&quot;7.49&quot; UnitPrice=&quot;7.49&quot;/&gt;
+				&lt;LineCharges&gt;
+					&lt;LineCharge ChargeCategory=&quot;SERVICE_FEE&quot;
+						ChargeName=&quot;Service Fee&quot; ChargePerLine=&quot;0.11&quot; IsManual=&quot;Y&quot;/&gt;
+				&lt;/LineCharges&gt;
+				&lt;LineTaxes&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Sales Tax&quot;/&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Shipping Tax&quot;/&gt;
+				&lt;/LineTaxes&gt;
+				&lt;Awards/&gt;
+			&lt;/OrderLine&gt;
+			&lt;OrderLine DeliveryMethod=&quot;PICK&quot; OrderedQty=&quot;1.0&quot;
+				PrimeLineNo=&quot;27&quot; ShipNode=&quot;STORE_03500591&quot; SubLineNo=&quot;1&quot;&gt;
+				&lt;Item ItemID=&quot;0001111086967&quot; ProductClass=&quot;GOOD&quot; UnitOfMeasure=&quot;EACH&quot;/&gt;
+				&lt;Extn ExtnCustOrdQty=&quot;1.0&quot; ExtnSubstitutionAllowed=&quot;Y&quot;/&gt;
+				&lt;LinePriceInfo IsLinePriceForInformationOnly=&quot;N&quot;
+					IsPriceLocked=&quot;Y&quot; ListPrice=&quot;1.88&quot;
+					PricingQuantityStrategy=&quot;FIX&quot; RetailPrice=&quot;1.88&quot; UnitPrice=&quot;1.88&quot;/&gt;
+				&lt;LineCharges&gt;
+					&lt;LineCharge ChargeCategory=&quot;SERVICE_FEE&quot;
+						ChargeName=&quot;Service Fee&quot; ChargePerLine=&quot;0.11&quot; IsManual=&quot;Y&quot;/&gt;
+				&lt;/LineCharges&gt;
+				&lt;LineTaxes&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Sales Tax&quot;/&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Shipping Tax&quot;/&gt;
+				&lt;/LineTaxes&gt;
+				&lt;Awards/&gt;
+			&lt;/OrderLine&gt;
+			&lt;OrderLine DeliveryMethod=&quot;PICK&quot; OrderedQty=&quot;1.0&quot;
+				PrimeLineNo=&quot;28&quot; ShipNode=&quot;STORE_03500591&quot; SubLineNo=&quot;1&quot;&gt;
+				&lt;Item ItemID=&quot;0004330161119&quot; ProductClass=&quot;GOOD&quot; UnitOfMeasure=&quot;EACH&quot;/&gt;
+				&lt;Extn ExtnCustOrdQty=&quot;1.0&quot; ExtnSubstitutionAllowed=&quot;Y&quot;/&gt;
+				&lt;LinePriceInfo IsLinePriceForInformationOnly=&quot;N&quot;
+					IsPriceLocked=&quot;Y&quot; ListPrice=&quot;3.19&quot;
+					PricingQuantityStrategy=&quot;FIX&quot; RetailPrice=&quot;3.19&quot; UnitPrice=&quot;3.19&quot;/&gt;
+				&lt;LineCharges&gt;
+					&lt;LineCharge ChargeCategory=&quot;SERVICE_FEE&quot;
+						ChargeName=&quot;Service Fee&quot; ChargePerLine=&quot;0.11&quot; IsManual=&quot;Y&quot;/&gt;
+				&lt;/LineCharges&gt;
+				&lt;LineTaxes&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Sales Tax&quot;/&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Shipping Tax&quot;/&gt;
+				&lt;/LineTaxes&gt;
+				&lt;Awards/&gt;
+			&lt;/OrderLine&gt;
+			&lt;OrderLine DeliveryMethod=&quot;PICK&quot; OrderedQty=&quot;1.0&quot;
+				PrimeLineNo=&quot;29&quot; ShipNode=&quot;STORE_03500591&quot; SubLineNo=&quot;1&quot;&gt;
+				&lt;Item ItemID=&quot;0001380010524&quot; ProductClass=&quot;GOOD&quot; UnitOfMeasure=&quot;EACH&quot;/&gt;
+				&lt;Extn ExtnCustOrdQty=&quot;1.0&quot; ExtnSubstitutionAllowed=&quot;Y&quot;/&gt;
+				&lt;LinePriceInfo IsLinePriceForInformationOnly=&quot;N&quot;
+					IsPriceLocked=&quot;Y&quot; ListPrice=&quot;1.88&quot;
+					PricingQuantityStrategy=&quot;FIX&quot; RetailPrice=&quot;1.88&quot; UnitPrice=&quot;1.88&quot;/&gt;
+				&lt;LineCharges&gt;
+					&lt;LineCharge ChargeCategory=&quot;SERVICE_FEE&quot;
+						ChargeName=&quot;Service Fee&quot; ChargePerLine=&quot;0.11&quot; IsManual=&quot;Y&quot;/&gt;
+				&lt;/LineCharges&gt;
+				&lt;LineTaxes&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Sales Tax&quot;/&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Shipping Tax&quot;/&gt;
+				&lt;/LineTaxes&gt;
+				&lt;Awards/&gt;
+			&lt;/OrderLine&gt;
+			&lt;OrderLine DeliveryMethod=&quot;PICK&quot; OrderedQty=&quot;1.0&quot;
+				PrimeLineNo=&quot;30&quot; ShipNode=&quot;STORE_03500591&quot; SubLineNo=&quot;1&quot;&gt;
+				&lt;Item ItemID=&quot;0001111085307&quot; ProductClass=&quot;GOOD&quot; UnitOfMeasure=&quot;EACH&quot;/&gt;
+				&lt;Extn ExtnCustOrdQty=&quot;1.0&quot; ExtnSubstitutionAllowed=&quot;Y&quot;/&gt;
+				&lt;LinePriceInfo IsLinePriceForInformationOnly=&quot;N&quot;
+					IsPriceLocked=&quot;Y&quot; ListPrice=&quot;2&quot;
+					PricingQuantityStrategy=&quot;FIX&quot; RetailPrice=&quot;2&quot; UnitPrice=&quot;2&quot;/&gt;
+				&lt;LineCharges&gt;
+					&lt;LineCharge ChargeCategory=&quot;SERVICE_FEE&quot;
+						ChargeName=&quot;Service Fee&quot; ChargePerLine=&quot;0.11&quot; IsManual=&quot;Y&quot;/&gt;
+				&lt;/LineCharges&gt;
+				&lt;LineTaxes&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Sales Tax&quot;/&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Shipping Tax&quot;/&gt;
+				&lt;/LineTaxes&gt;
+				&lt;Awards/&gt;
+			&lt;/OrderLine&gt;
+			&lt;OrderLine DeliveryMethod=&quot;PICK&quot; OrderedQty=&quot;1.0&quot;
+				PrimeLineNo=&quot;31&quot; ShipNode=&quot;STORE_03500591&quot; SubLineNo=&quot;1&quot;&gt;
+				&lt;Item ItemID=&quot;0003700008886&quot; ProductClass=&quot;GOOD&quot; UnitOfMeasure=&quot;EACH&quot;/&gt;
+				&lt;Extn ExtnCustOrdQty=&quot;1.0&quot; ExtnSubstitutionAllowed=&quot;Y&quot;/&gt;
+				&lt;LinePriceInfo IsLinePriceForInformationOnly=&quot;N&quot;
+					IsPriceLocked=&quot;Y&quot; ListPrice=&quot;11.99&quot;
+					PricingQuantityStrategy=&quot;FIX&quot; RetailPrice=&quot;11.99&quot; UnitPrice=&quot;11.99&quot;/&gt;
+				&lt;LineCharges&gt;
+					&lt;LineCharge ChargeCategory=&quot;SERVICE_FEE&quot;
+						ChargeName=&quot;Service Fee&quot; ChargePerLine=&quot;0.11&quot; IsManual=&quot;Y&quot;/&gt;
+				&lt;/LineCharges&gt;
+				&lt;LineTaxes&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Sales Tax&quot;/&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Shipping Tax&quot;/&gt;
+				&lt;/LineTaxes&gt;
+				&lt;Awards/&gt;
+			&lt;/OrderLine&gt;
+			&lt;OrderLine DeliveryMethod=&quot;PICK&quot; OrderedQty=&quot;1.0&quot;
+				PrimeLineNo=&quot;32&quot; ShipNode=&quot;STORE_03500591&quot; SubLineNo=&quot;1&quot;&gt;
+				&lt;Item ItemID=&quot;0001111080856&quot; ProductClass=&quot;GOOD&quot; UnitOfMeasure=&quot;EACH&quot;/&gt;
+				&lt;Extn ExtnCustOrdQty=&quot;1.0&quot; ExtnSubstitutionAllowed=&quot;Y&quot;/&gt;
+				&lt;LinePriceInfo IsLinePriceForInformationOnly=&quot;N&quot;
+					IsPriceLocked=&quot;Y&quot; ListPrice=&quot;2.5&quot;
+					PricingQuantityStrategy=&quot;FIX&quot; RetailPrice=&quot;2.5&quot; UnitPrice=&quot;2.5&quot;/&gt;
+				&lt;LineCharges&gt;
+					&lt;LineCharge ChargeCategory=&quot;SERVICE_FEE&quot;
+						ChargeName=&quot;Service Fee&quot; ChargePerLine=&quot;0.11&quot; IsManual=&quot;Y&quot;/&gt;
+				&lt;/LineCharges&gt;
+				&lt;LineTaxes&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Sales Tax&quot;/&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Shipping Tax&quot;/&gt;
+				&lt;/LineTaxes&gt;
+				&lt;Awards/&gt;
+			&lt;/OrderLine&gt;
+			&lt;OrderLine DeliveryMethod=&quot;PICK&quot; OrderedQty=&quot;1.0&quot;
+				PrimeLineNo=&quot;33&quot; ShipNode=&quot;STORE_03500591&quot; SubLineNo=&quot;1&quot;&gt;
+				&lt;Item ItemID=&quot;0001111087088&quot; ProductClass=&quot;GOOD&quot; UnitOfMeasure=&quot;EACH&quot;/&gt;
+				&lt;Extn ExtnCustOrdQty=&quot;1.0&quot; ExtnSubstitutionAllowed=&quot;Y&quot;/&gt;
+				&lt;LinePriceInfo IsLinePriceForInformationOnly=&quot;N&quot;
+					IsPriceLocked=&quot;Y&quot; ListPrice=&quot;3.27&quot;
+					PricingQuantityStrategy=&quot;FIX&quot; RetailPrice=&quot;3.27&quot; UnitPrice=&quot;3.27&quot;/&gt;
+				&lt;LineCharges&gt;
+					&lt;LineCharge ChargeCategory=&quot;SERVICE_FEE&quot;
+						ChargeName=&quot;Service Fee&quot; ChargePerLine=&quot;0.11&quot; IsManual=&quot;Y&quot;/&gt;
+				&lt;/LineCharges&gt;
+				&lt;LineTaxes&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Sales Tax&quot;/&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Shipping Tax&quot;/&gt;
+				&lt;/LineTaxes&gt;
+				&lt;Awards/&gt;
+			&lt;/OrderLine&gt;
+			&lt;OrderLine DeliveryMethod=&quot;PICK&quot; OrderedQty=&quot;1.0&quot;
+				PrimeLineNo=&quot;34&quot; ShipNode=&quot;STORE_03500591&quot; SubLineNo=&quot;1&quot;&gt;
+				&lt;Item ItemID=&quot;0001111089791&quot; ProductClass=&quot;GOOD&quot; UnitOfMeasure=&quot;EACH&quot;/&gt;
+				&lt;Extn ExtnCustOrdQty=&quot;1.0&quot; ExtnSubstitutionAllowed=&quot;Y&quot;/&gt;
+				&lt;LinePriceInfo IsLinePriceForInformationOnly=&quot;N&quot;
+					IsPriceLocked=&quot;Y&quot; ListPrice=&quot;1&quot;
+					PricingQuantityStrategy=&quot;FIX&quot; RetailPrice=&quot;1&quot; UnitPrice=&quot;1&quot;/&gt;
+				&lt;LineCharges&gt;
+					&lt;LineCharge ChargeCategory=&quot;SERVICE_FEE&quot;
+						ChargeName=&quot;Service Fee&quot; ChargePerLine=&quot;0.11&quot; IsManual=&quot;Y&quot;/&gt;
+				&lt;/LineCharges&gt;
+				&lt;LineTaxes&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Sales Tax&quot;/&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Shipping Tax&quot;/&gt;
+				&lt;/LineTaxes&gt;
+				&lt;Awards/&gt;
+			&lt;/OrderLine&gt;
+			&lt;OrderLine DeliveryMethod=&quot;PICK&quot; OrderedQty=&quot;1.0&quot;
+				PrimeLineNo=&quot;35&quot; ShipNode=&quot;STORE_03500591&quot; SubLineNo=&quot;1&quot;&gt;
+				&lt;Item ItemID=&quot;0001800085517&quot; ProductClass=&quot;GOOD&quot; UnitOfMeasure=&quot;EACH&quot;/&gt;
+				&lt;Extn ExtnCustOrdQty=&quot;1.0&quot; ExtnSubstitutionAllowed=&quot;Y&quot;/&gt;
+				&lt;LinePriceInfo IsLinePriceForInformationOnly=&quot;N&quot;
+					IsPriceLocked=&quot;Y&quot; ListPrice=&quot;3.29&quot;
+					PricingQuantityStrategy=&quot;FIX&quot; RetailPrice=&quot;3.29&quot; UnitPrice=&quot;3.29&quot;/&gt;
+				&lt;LineCharges&gt;
+					&lt;LineCharge ChargeCategory=&quot;SERVICE_FEE&quot;
+						ChargeName=&quot;Service Fee&quot; ChargePerLine=&quot;0.11&quot; IsManual=&quot;Y&quot;/&gt;
+				&lt;/LineCharges&gt;
+				&lt;LineTaxes&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Sales Tax&quot;/&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Shipping Tax&quot;/&gt;
+				&lt;/LineTaxes&gt;
+				&lt;Awards/&gt;
+			&lt;/OrderLine&gt;
+			&lt;OrderLine DeliveryMethod=&quot;PICK&quot; OrderedQty=&quot;1.0&quot;
+				PrimeLineNo=&quot;36&quot; ShipNode=&quot;STORE_03500591&quot; SubLineNo=&quot;1&quot;&gt;
+				&lt;Item ItemID=&quot;0007056098372&quot; ProductClass=&quot;GOOD&quot; UnitOfMeasure=&quot;EACH&quot;/&gt;
+				&lt;Extn ExtnCustOrdQty=&quot;1.0&quot; ExtnSubstitutionAllowed=&quot;Y&quot;/&gt;
+				&lt;LinePriceInfo IsLinePriceForInformationOnly=&quot;N&quot;
+					IsPriceLocked=&quot;Y&quot; ListPrice=&quot;2.79&quot;
+					PricingQuantityStrategy=&quot;FIX&quot; RetailPrice=&quot;2.79&quot; UnitPrice=&quot;2.79&quot;/&gt;
+				&lt;LineCharges&gt;
+					&lt;LineCharge ChargeCategory=&quot;SERVICE_FEE&quot;
+						ChargeName=&quot;Service Fee&quot; ChargePerLine=&quot;0.11&quot; IsManual=&quot;Y&quot;/&gt;
+				&lt;/LineCharges&gt;
+				&lt;LineTaxes&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Sales Tax&quot;/&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Shipping Tax&quot;/&gt;
+				&lt;/LineTaxes&gt;
+				&lt;Awards/&gt;
+			&lt;/OrderLine&gt;
+			&lt;OrderLine DeliveryMethod=&quot;PICK&quot; OrderedQty=&quot;1.0&quot;
+				PrimeLineNo=&quot;37&quot; ShipNode=&quot;STORE_03500591&quot; SubLineNo=&quot;1&quot;&gt;
+				&lt;Item ItemID=&quot;0001450001183&quot; ProductClass=&quot;GOOD&quot; UnitOfMeasure=&quot;EACH&quot;/&gt;
+				&lt;Extn ExtnCustOrdQty=&quot;1.0&quot; ExtnSubstitutionAllowed=&quot;Y&quot;/&gt;
+				&lt;LinePriceInfo IsLinePriceForInformationOnly=&quot;N&quot;
+					IsPriceLocked=&quot;Y&quot; ListPrice=&quot;2.69&quot;
+					PricingQuantityStrategy=&quot;FIX&quot; RetailPrice=&quot;2.69&quot; UnitPrice=&quot;2.69&quot;/&gt;
+				&lt;LineCharges&gt;
+					&lt;LineCharge ChargeCategory=&quot;SERVICE_FEE&quot;
+						ChargeName=&quot;Service Fee&quot; ChargePerLine=&quot;0.11&quot; IsManual=&quot;Y&quot;/&gt;
+				&lt;/LineCharges&gt;
+				&lt;LineTaxes&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Sales Tax&quot;/&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Shipping Tax&quot;/&gt;
+				&lt;/LineTaxes&gt;
+				&lt;Awards/&gt;
+			&lt;/OrderLine&gt;
+			&lt;OrderLine DeliveryMethod=&quot;PICK&quot; OrderedQty=&quot;1.0&quot;
+				PrimeLineNo=&quot;38&quot; ShipNode=&quot;STORE_03500591&quot; SubLineNo=&quot;1&quot;&gt;
+				&lt;Item ItemID=&quot;0002000046595&quot; ProductClass=&quot;GOOD&quot; UnitOfMeasure=&quot;EACH&quot;/&gt;
+				&lt;Extn ExtnCustOrdQty=&quot;1.0&quot; ExtnSubstitutionAllowed=&quot;Y&quot;/&gt;
+				&lt;LinePriceInfo IsLinePriceForInformationOnly=&quot;N&quot;
+					IsPriceLocked=&quot;Y&quot; ListPrice=&quot;3.19&quot;
+					PricingQuantityStrategy=&quot;FIX&quot; RetailPrice=&quot;3.19&quot; UnitPrice=&quot;3.19&quot;/&gt;
+				&lt;LineCharges&gt;
+					&lt;LineCharge ChargeCategory=&quot;SERVICE_FEE&quot;
+						ChargeName=&quot;Service Fee&quot; ChargePerLine=&quot;0.11&quot; IsManual=&quot;Y&quot;/&gt;
+				&lt;/LineCharges&gt;
+				&lt;LineTaxes&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Sales Tax&quot;/&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Shipping Tax&quot;/&gt;
+				&lt;/LineTaxes&gt;
+				&lt;Awards/&gt;
+			&lt;/OrderLine&gt;
+			&lt;OrderLine DeliveryMethod=&quot;PICK&quot; OrderedQty=&quot;1.0&quot;
+				PrimeLineNo=&quot;39&quot; ShipNode=&quot;STORE_03500591&quot; SubLineNo=&quot;1&quot;&gt;
+				&lt;Item ItemID=&quot;0001111091046&quot; ProductClass=&quot;GOOD&quot; UnitOfMeasure=&quot;EACH&quot;/&gt;
+				&lt;Extn ExtnCustOrdQty=&quot;1.0&quot; ExtnSubstitutionAllowed=&quot;Y&quot;/&gt;
+				&lt;LinePriceInfo IsLinePriceForInformationOnly=&quot;N&quot;
+					IsPriceLocked=&quot;Y&quot; ListPrice=&quot;2.29&quot;
+					PricingQuantityStrategy=&quot;FIX&quot; RetailPrice=&quot;2.29&quot; UnitPrice=&quot;2.29&quot;/&gt;
+				&lt;LineCharges&gt;
+					&lt;LineCharge ChargeCategory=&quot;SERVICE_FEE&quot;
+						ChargeName=&quot;Service Fee&quot; ChargePerLine=&quot;0.11&quot; IsManual=&quot;Y&quot;/&gt;
+				&lt;/LineCharges&gt;
+				&lt;LineTaxes&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Sales Tax&quot;/&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Shipping Tax&quot;/&gt;
+				&lt;/LineTaxes&gt;
+				&lt;Awards/&gt;
+			&lt;/OrderLine&gt;
+			&lt;OrderLine DeliveryMethod=&quot;PICK&quot; OrderedQty=&quot;2.0&quot;
+				PrimeLineNo=&quot;40&quot; ShipNode=&quot;STORE_03500591&quot; SubLineNo=&quot;1&quot;&gt;
+				&lt;Item ItemID=&quot;0025093600000&quot; ProductClass=&quot;GOOD&quot; UnitOfMeasure=&quot;EACH&quot;/&gt;
+				&lt;Extn ExtnCustOrdQty=&quot;2.0&quot; ExtnSubstitutionAllowed=&quot;Y&quot;/&gt;
+				&lt;LinePriceInfo IsLinePriceForInformationOnly=&quot;N&quot;
+					IsPriceLocked=&quot;Y&quot; ListPrice=&quot;4.94&quot;
+					PricingQuantityStrategy=&quot;FIX&quot; RetailPrice=&quot;4.94&quot; UnitPrice=&quot;4.94&quot;/&gt;
+				&lt;LineCharges&gt;
+					&lt;LineCharge ChargeCategory=&quot;SERVICE_FEE&quot;
+						ChargeName=&quot;Service Fee&quot; ChargePerLine=&quot;0.21&quot; IsManual=&quot;Y&quot;/&gt;
+				&lt;/LineCharges&gt;
+				&lt;LineTaxes&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Sales Tax&quot;/&gt;
+					&lt;LineTax ChargeCategory=&quot;Price&quot; ChargeName=&quot;TaxName&quot;
+						Tax=&quot;0&quot; TaxName=&quot;Shipping Tax&quot;/&gt;
+				&lt;/LineTaxes&gt;
+				&lt;Awards/&gt;
+			&lt;/OrderLine&gt;
+		&lt;/OrderLines&gt;
+		&lt;PersonInfoShipTo AddressID=&quot;Kroger&quot;
+			AddressLine1=&quot;6231 Garth Rd&quot; City=&quot;Baytown&quot; Country=&quot;US&quot;
+			DayPhone=&quot;&quot; State=&quot;TX&quot; ZipCode=&quot;77521&quot;/&gt;
+		&lt;PersonInfoBillTo AddressID=&quot;12655&quot; AddressLine1=&quot;Rnadom Street&quot;
+			City=&quot;Random City&quot; Country=&quot;US&quot; DayPhone=&quot;&quot;
+			EMailID=&quot;test@test.com&quot; FirstName=&quot;John&quot;
+			LastName=&quot;Doe&quot; State=&quot;TX&quot; ZipCode=&quot;77521&quot;/&gt;
+	&lt;/Order&gt;</stringProp>
+          <stringProp name="jms.input_file"></stringProp>
+          <stringProp name="jms.random_path"></stringProp>
+          <stringProp name="jms.config_choice">jms_use_text</stringProp>
+          <stringProp name="jms.config_msg_type">jms_text_message</stringProp>
+          <stringProp name="jms.iterations">1</stringProp>
+          <boolProp name="jms.authenticate">false</boolProp>
+          <elementProp name="jms.jmsProperties" elementType="org.apache.jmeter.protocol.jms.sampler.JMSProperties">
+            <collectionProp name="JMSProperties.properties"/>
+          </elementProp>
+        </PublisherSampler>
+        <hashTree/>
+        <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+          <boolProp name="ResultCollector.error_logging">false</boolProp>
+          <objProp>
+            <name>saveConfig</name>
+            <value class="SampleSaveConfiguration">
+              <time>true</time>
+              <latency>true</latency>
+              <timestamp>true</timestamp>
+              <success>true</success>
+              <label>true</label>
+              <code>true</code>
+              <message>true</message>
+              <threadName>true</threadName>
+              <dataType>true</dataType>
+              <encoding>false</encoding>
+              <assertions>true</assertions>
+              <subresults>true</subresults>
+              <responseData>false</responseData>
+              <samplerData>false</samplerData>
+              <xml>true</xml>
+              <fieldNames>false</fieldNames>
+              <responseHeaders>false</responseHeaders>
+              <requestHeaders>false</requestHeaders>
+              <responseDataOnError>false</responseDataOnError>
+              <saveAssertionResultsFailureMessage>false</saveAssertionResultsFailureMessage>
+              <assertionsResultsToSave>2</assertionsResultsToSave>
+              <bytes>true</bytes>
+              <threadCounts>true</threadCounts>
+            </value>
+          </objProp>
+          <stringProp name="filename"></stringProp>
+        </ResultCollector>
+        <hashTree/>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
